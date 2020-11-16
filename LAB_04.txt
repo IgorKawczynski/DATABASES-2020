@@ -1,0 +1,40 @@
+ĆWICZENIE BAZY DANYCH GRUPA 2
+
+
+Lab 04:
+
+ZAD 1 
+
+
+a ) 
+select * from postac where rodzaj='wiking' order by data_ur ASC;
+delete from postac where nazwa='Ragnar';
+delete from postac where nazwa='Ivar';
+ 
+b )
+alter table walizka drop foreign key walizka_ibfk_1;
+alter table przetwory drop foreign key przetwory_ibfk_1;
+alter table przetwory drop foreign key przetwory_ibfk_2;
+alter table postac modify id_postaci int;
+alter table postac drop primary key;
+
+ZAD 2
+
+
+a)
+alter table postac add column pesel CHAR(11);
+update postac set pesel='12345678912'+id_postaci;
+alter table postac add primary key (pesel);
+
+b)
+alter table postac modify rodzaj enum ('wiking', 'ptak', 'kobieta', 'syrena');
+insert into postac values(12,'Gertruda Nieszczera','syrena', default, '2003-09-10',17, 01292400587 , default);
+
+ZAD 3
+
+
+a)
+update postac set statek='MMS Lincoln' where nazwa LIKE '%a%';
+
+b)
+update statek set max_ladownosc=max_ladownosc*0.7 where data_wodowania BETWEEN '1901-01-01' AND '2001-01-01';
