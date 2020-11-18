@@ -1,0 +1,158 @@
+LAB_04 KONTYNUACJA
+
+zadanie 3 
+
+c) ALTER TABLE postac ADD CHECK (wiek <1001);
+
+*sprawdzam czy działa :
+
+INSERT INTO postac VALUES(25, 'kozak', 'kobieta', default, '900-01-01', 1120, '51232154325', default);
+
+
+zadanie 4
+
+a) 
+
+ALTER TABLE postac MODIFY rodzaj enum('kapitan', 'wiking', 'ptak', 'kobieta', 'syrena', 'waz');
+
+INSERT INTO postac VALUES(29, 'loko', 'waz', default, '2020-01-01', 1, '00000000000', default);
+
+
+b)
+
+CREATE TABLE marynarz SELECT * FROM postac;
+
+c)
+
+ALTER TABLE marynarz ADD FOREIGN KEY (okret) REFERENCES statek(nazwa_statku) ON DELETE SET NULL;
+
+
+
+
+zadanie 5
+
+a) 
+
+UPDATE postac SET okret = NULL;
+
+B) delete from ... where ...
+
+DELETE FROM postac WHERE id_postaci = 9;
+
+
+c) 
+
+
+DELETE FROM statek WHERE max_ladownosc>0;
+
+
+
+d) 
+
+ ALTER TABLE postac DROP postac_ibfk_1;
+
+ DROP TABLE statek;
+
+
+
+e)  
+
+CREATE TABLE zwierz(id_zwierz INT NOT NULL, nazwa varchar(40), wiek INT UNSIGNED);
+
+
+f)
+
+INSERT INTO zwierz SELECT id_postaci, nazwa, wiek FROM postac WHERE rodzaj = 'waz' or rodzaj = 'syrena' or rodzaj = 'ptak';
+
+
+
+LAB_05 
+
+
+
+
+zadanie 1 
+
+1 ) 
+
+ create table kreatura select * from wikingowie.kreatura;
+create table zasob select * from wikingowie.zasob;
+create table ekwipunek select * from wikingowie.ekwipunek;
+
+
+
+
+2 ) 
+
+SELECT * FROM zasob; 
+
+
+
+
+3) 
+
+DESC zasob;
+   SELECT * FROM zasob WHERE rodzaj = 'jedzenie';
+
+
+
+4)
+
+SELECT idZasobu, ilosc FROM ekwipunek WHERE idKreatury=3 or idKreatury=5 or idKreatury=1; 
+albo
+SELECT idZasobu, ilosc FROM ekwipunek WHERE idKreatury IN(1, 3, 5);
+
+
+zadanie 2 
+
+1) 
+sprawdzam strukture tabeli i jej rekordy:
+select * from kreatura;
+
+
+SELECT nazwa FROM kreatura WHERE rodzaj != 'wiedzma' AND udzwig>=50;
+
+2)
+
+SELECT * FROM zasob WHERE waga BETWEEN 2 AND 5;
+
+
+3)
+
+
+SELECT * FROM kreatura WHERE nazwa like '%or%' AND udzwig BETWEEN 30 and
+70;
+
+
+
+zadanie 3 
+
+
+1) 
+
+SELECT * FROM zasob WHERE MONTH(datapozyskania) IN ('07', '08');
+
+
+
+
+2)
+
+ SELECT * FROM zasob WHERE rodzaj IS NOT NULL ORDER BY waga ASC;
+
+
+
+3)
+
+SELECT * FROM kreatura ORDER BY dataUr LIMIT 5;
+
+
+
+zadanie 4
+
+
+1) SELECT distinct(rodzaj) FROM zasob;
+
+
+
+2) SELECT CONCAT(nazwa, " - ", rodzaj) FROM kreatura;
+
