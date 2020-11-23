@@ -1,0 +1,31 @@
+
+4.1 select distinct from zasob;
+
+4.2 SELECT CONCAT(nazwa, " - ", rodzaj) FROM kreatura WHERE rodzaj like '%wi%';
+
+4.3 SELECT nazwa, ilosc*waga as waga_calkowita FROM zasob WHERE YEAR(dataPozyskania) BETWEEN 2000 AND 2007;
+
+5.1 SELECT nazwa, waga*0.7 AS waga_wlasciwa, waga*0.3 AS waga_odpadkow FROM zasob;
+
+5.2 SELECT nazwa FROM zasob WHERE rodzaj IS NULL;  //// SELECT nazwa FROM zasob WHERE rodzaj IS NOT FALSE;
+
+5.3 SELECT DISTINCT rodzaj, nazwa FROM zasob WHERE nazwa like 'Ba%' or nazwa like '%os' ORDER BY rodzaj ASC;
+
+
+LAB 06
+
+
+1.1 SELECT AVG(waga) FROM kreatura WHERE rodzaj = 'wiking';
+
+1.2 SELECT COUNT(nazwa), rodzaj, AVG(waga) FROM kreatura GROUP BY rodzaj;
+
+1.3 SELECT rodzaj, AVG(YEAR(CURRENT_TIMESTAMP)-YEAR(dataUr)) AS 'sredni wiek' FROM kreatura GROUP BY rodzaj ;
+
+2.1 SELECT rodzaj, SUM(waga*ilosc) FROM zasob GROUP BY rodzaj;
+
+2.2 SELECT nazwa, AVG(waga) FROM zasob WHERE ilosc >=4 GROUP BY nazwa HAVING AVG(waga)>10;
+
+2.3 SELECT COUNT(DISTINCT(nazwa)), rodzaj FROM zasob GROUP BY rodzaj HAVING SUM(ilosc)>1;
+
+
+
