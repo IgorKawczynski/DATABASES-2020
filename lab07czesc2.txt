@@ -1,0 +1,15 @@
+2.2
+SELECT et.idEtapu, s.nazwa, k.nazwa FROM etapy_wyprawy et, wyprawa w, sektor s, kreatura k WHERE et.idWyprawy = w.id_wyprawy
+AND et.sektor = s.id_sektora AND w.kierownik = k.idKreatury ORDER BY w.data_rozpoczecia, et.kolejnosc;
+
+3.1
+select id_sektora,count(idEtapu) as odwiedzony from sektor s left join etapy_wyprawy e on e.sektor=s.id_sektora group by id_sektora ;
+
+3.2
+select nazwa,if(count(id_uczestnika)>0,"bral udzial w wyprawie","nie bral udzialu w wyprawie") from kreatura left join uczestnicy on idKreatury=id_uczestnika group by nazwa ;
+
+4.1
+SELECT w.nazwa,  SUM(LENGTH(e.dziennik)) AS dlugosc FROM wyprawa AS w, etapy_wyprawy AS e WHERE e.idWyprawy=w.id_wyprawy GROUP BY w.nazwa HAVING dlugosc<400;
+
+4.2
+SELECT w.nazwa, SUM(z.waga*e.ilosc)/COUNT(u.id_uczestnika) as srednia FROM wyprawa as w, uczestnicy as u, zasob as z, ekwipunek as e WHERE u.id_wyprawy=w.id_wyprawy AND e.idZasobu=z.idZasobu AND u.id_uczestnika=e.idKreatury GROUP BY w.nazwa;
