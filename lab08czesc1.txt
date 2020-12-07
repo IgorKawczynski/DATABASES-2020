@@ -1,0 +1,28 @@
+6.1 
+DELIMITER //
+CREATE TRIGGER sprawdz_waga_before_modyfikacja_kreatura
+BEFORE INSERT ON kreatura
+FOR EACH ROW
+BEGIN
+IF NEW.waga>0
+THEN
+SET NEW.waga = 0;
+END IF;
+END 
+//
+DELIMITER ;
+
+
+6.2
+CREATE TABLE archiwum_wypraw(id_wyprawy INT DEFAULT 0, nazwa VARCHAR(200), data_rozpoczecia DATE, data_zakonczenia DATE, kierownik VARCHAR(100));
+
+DELIMITER //
+CREATE TRIGGER archiwum_after_delete
+AFTER DELETE ON wyprawa
+FOR EACH ROW
+BEGIN
+INSERT INTO archiwum_wypraw 
+SELECT w.id_wyprawy, w.nazwa, w.data_rozpoczecia, w.data_zakonczenia, k.nazwa FROM wyprawa AS W, kreatura AS k WHERE w.kierownik=k.idKreatury AND w.id_wyprawy=OLD.w.id_wyprawy;
+END
+//
+DELIMITER;
