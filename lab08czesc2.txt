@@ -1,0 +1,60 @@
+6.3
+
+1
+DELIMITER $$
+CREATE PROCEDURE eliksir_sily(IN id INT)
+BEGIN
+UPDATE kreatura SET udzwig=1.2*udzwig WHERE idKreatury = id;
+END 
+$$
+DELIMITER ;
+
+2
+DELIMITER $$
+CREATE FUNCTION duze_litery(tekst)
+RETURNS VARCHAR(255)
+BEGIN
+DECLARE duzy_tekst VARCHAR(255);
+SELECT UPPER(tekst) INTO @duzy_tekst;
+RETURN @duzy_tekst;
+END
+$$
+DELIMITER;
+
+6.4
+
+1
+CREATE TABLE system_alarmowy(id_alarmu INT, wiadomosc VARCHAR(255));
+
+2
+DELIMITER $$
+CREATE TRIGGER sprawdz_tesciowa
+AFTER INSERT ON wyprawa
+FOR EACH ROW
+BEGIN
+DECLARE zmienna INT;
+SELECT count(*) INTO zmienna
+FROM etapy_wyprawy AS e, kreatura AS k, wyprawa AS w, uczestnicy AS u
+WHERE e.idWyprawy=w.id_wyprawy AND k.idKreatury=u.id_uczestnika
+AND u.id_wyprawy=w.id_wyprawy
+AND k.nazwa='Tesciowa' AND e.sektor=7
+AND w.id_wyprawy=NEW.id_wyprawy;
+IF zmienna > 0
+THEN 
+INSERT INTO system_alarmowy VALUES(DEFAULT, 'Tesciowa nadchodzi !!!');
+END IF;
+END 
+$$ 
+DELIMITER;
+
+
+6.5
+
+1
+DELIMITER $$
+CREATE PROCEDURE udzwigi(OUT srednia FLOAT, OUT suma FLOAT, OUT maks FLOAT)
+BEGIN
+SELECT AVG(udzwig) , SUM(udzwig) , MAX(udzwig) INTO srednia, suma, maks from kreatura;
+END
+$$
+DELIMITER ;
