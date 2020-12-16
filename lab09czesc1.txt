@@ -1,0 +1,32 @@
+zti bazy damych lab 02
+
+
+czesc 2
+
+
+2.1 
+SELECT p.imie, p.nazwisko, d.nazwa FROM pracownik as p, dzial as d WHERE p.dzial=d.id_dzialu;
+
+2.2
+SELECT t.nazwa_towaru, t.kategoria, s.ilosc FROM towar as t, stan_magazynowy as s ORDER BY ilosc DESC;
+
+2.3
+SELECT z.id_zamowienia, z.status_zamowienia FROM zamowienie as z, status_zamowienia as s WHERE z.status_zamowienia=6;
+
+2.4
+SELECT  k.id_klienta FROM klient as k, adres_klienta as a WHERE a.miejscowosc ="Olsztyn" AND a.klient=k.id_klienta;
+
+2.5
+SELECT distinct id_jednostki FROM jednostka_miary
+WHERE id_jednostki NOT IN (SELECT distinct jm FROM stan_magazynowy);
+
+2.8
+SELECT p.id_pozycji, z.data_zamowienia FROM pozycja_zamowienia as p, zamowienie as z WHERE z.id_zamowienia=p.zamowienie ORDER BY z.data_zamowienia ASC LIMIT 5;
+
+
+2.9
+SELECT z.id_zamowienia, s.nazwa_statusu_zamowienia FROM zamowienie as z, status_zamowienia as s WHERE z.status_zamowienia=s.id_statusu_zamowienia AND s.nazwa_statusu_zamowienia!='zrealizowane';
+
+
+2.10
+SELECT * FROM adres_klienta WHERE kod NOT LIKE '__-___';
