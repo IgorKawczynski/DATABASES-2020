@@ -1,0 +1,59 @@
+lab03 zadanka dodatkowe
+
+
+1 
+SELECT CONCAT(imie, ' ',  nazwisko) AS imie_nazwisko, YEAR(data_urodzenia) rok_urodzenia FROM pracownik;
+
+2
+SELECT CONCAT(imie, ' ',  nazwisko) AS imie_nazwisko, (YEAR(now())-YEAR(data_urodzenia)) FROM pracownik;
+
+3
+SELECT d.nazwa, COUNT(p.id_pracownika) FROM dzial as d, pracownik as p WHERE p.dzial=d.id_dzialu GROUP BY d.nazwa;
+
+4
+SELECT k.nazwa_kategori, COUNT(t.id_towaru) ilość FROM kategoria AS k, towar AS t WHERE k.id_kategori = t.kategoria GROUP BY k.nazwa_kategori;
+
+
+5
+SELECT k.nazwa_kategori, GROUP_CONCAT(t.nazwa_towaru) AS nazwa_towaru 
+    FROM kategoria AS k, towar AS t 
+    WHERE k.id_kategori = t.kategoria 
+    GROUP BY k.nazwa_kategori;
+
+
+6
+SELECT ROUND(AVG(pensja),2) AS srednia 
+    FROM pracownik;
+
+ 
+
+7
+SELECT AVG(pensja) AS srednia 
+    FROM pracownik
+    WHERE (YEAR(now())-YEAR(data_zatrudnienia))>= 5;
+
+
+8
+SELECT t.nazwa_towaru, SUM(p.ilosc) AS suma_sprzedanych
+    FROM pozycja_zamowienia AS p, towar AS t
+    WHERE t.id_towaru=p.towar
+    GROUP BY towar
+    ORDER BY suma_sprzedanych DESC
+    limit 10;
+
+
+
+9
+SELECT z.numer_zamowienia, SUM(p.ilosc * p.cena) AS wartosc 
+    FROM zamowienie AS z, pozycja_zamowienia AS p 
+    WHERE z.data_zamowienia BETWEEN '2017-01-01' AND '2017-03-31' 
+    GROUP BY z.numer_zamowienia;
+
+
+10
+ SELECT p.imie, p.nazwisko, SUM(pz.cena*pz.ilosc) AS suma_wartości 
+    FROM pracownik AS p, zamowienie AS z, pozycja_zamowienia AS pz
+    WHERE p.id_pracownika=z.pracownik_id_pracownika
+    AND pz.zamowienie=z.id_zamowienia
+    GROUP BY z.pracownik_id_pracownika
+    ORDER BY suma_wartosci DESC;
