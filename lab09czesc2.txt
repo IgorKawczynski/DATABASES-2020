@@ -13,7 +13,7 @@ SELECT d.nazwa, COUNT(p.id_pracownika) FROM dzial as d, pracownik as p WHERE p.d
 4
 SELECT k.nazwa_kategori, COUNT(t.id_towaru) ilość FROM kategoria AS k, towar AS t WHERE k.id_kategori = t.kategoria GROUP BY k.nazwa_kategori;
 
-
+workbench
 5
 SELECT k.nazwa_kategori, GROUP_CONCAT(t.nazwa_towaru) AS nazwa_towaru 
     FROM kategoria AS k, towar AS t 
